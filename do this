@@ -1,0 +1,27 @@
+import time
+import serial
+
+ser = serial.Serial('com12',115200)
+
+
+
+ser.write('AT\r\n')
+time.sleep(2)
+while ser.inWaiting()>0:
+   print(ser.readline())
+
+ser.write('AT+CWMODE=3\r\n')
+time.sleep(2)
+while ser.inWaiting()>0:
+   print(ser.readline())
+
+
+out=['','','','','','','','','',]
+for i in range(9):
+    ser.write('AT+CWLAP\r\n')
+    time.sleep(2.5)
+    while ser.inWaiting()>0:
+        out[i]+=ser.read(1)
+    print out[i]
+
+print out
